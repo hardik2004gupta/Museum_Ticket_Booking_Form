@@ -167,7 +167,7 @@
     
     <div class="form-group">
         <label for="visit-date">Date of Visit:</label>
-        <input type="date" id="visit-date" name="visit-date" required>
+        <input type="date" id="visit-date" name="visit-date" min="" required>
     </div>
 
     <!-- Ticket Type Selection -->
@@ -358,6 +358,10 @@
     document.getElementById('booking-form').addEventListener('change', function() {
             const termsChecked = document.getElementById('terms-conditions').checked;
             document.getElementById('submit-btn').disabled = !termsChecked;
+        });
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').setAttribute('min', today);
         });
 </script>
 </body>

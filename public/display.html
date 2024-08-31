@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .form-group:last-child {
+            border-bottom: none;
+        }
+        .form-group strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group span {
+            font-size: 1.1em;
+            color: #333;
+        }
+        .form-group:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Booking Confirmation</h2>
+        <div class="form-group">
+            <strong>Full Name:</strong> <span id="name"></span>
+        </div>
+        <div class="form-group">
+            <strong>Email:</strong> <span id="email"></span>
+        </div>
+        <div class="form-group">
+            <strong>Phone Number:</strong> <span id="phone"></span>
+        </div>
+        <div class="form-group">
+            <strong>Date of Visit:</strong> <span id="visit-date"></span>
+        </div>
+        <div class="form-group">
+            <strong>Ticket Type:</strong> <span id="ticket-type"></span>
+        </div>
+        <div class="form-group">
+            <strong>Number of Tickets:</strong> <span id="num-tickets"></span>
+        </div>
+        <div class="form-group">
+            <strong>Selected Events:</strong> <span id="events"></span>
+        </div>
+        <div class="form-group">
+            <strong>Grand Total:</strong> <span id="grand-total"></span>
+        </div>
+        <div class="form-group">
+            <strong>Your UPI ID used for the payment (for payment verification):</strong> <span id="userqr"></span>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBookingData(id) {
+            try {
+                const response = await fetch(`/booking/${id}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const booking = await response.json();
+                
+                document.getElementById("name").textContent = booking.name || 'N/A';
+                document.getElementById("email").textContent = booking.email || 'N/A';
+                document.getElementById("phone").textContent = booking.phone || 'N/A';
+                document.getElementById("visit-date").textContent = booking.visitDate || 'N/A';
+                document.getElementById("ticket-type").textContent = booking.ticketType || 'N/A';
+                document.getElementById("num-tickets").textContent = booking.numTickets || '0';
+                document.getElementById("events").textContent = booking.events && booking.events.length > 0 ? booking.events.join(', ') : 'None';
+                document.getElementById("grand-total").textContent = booking.grandTotal ? `Rs. ${booking.grandTotal}` : 'Rs. 0';
+                document.getElementById("userqr").textContent = booking.userqr || 'N/A';
+
+            } catch (error) {
+                console.error('Error fetching booking data:', error);
+                // You can display a friendly message to the user here if needed
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('id');
+        if (bookingId) {
+            fetchBookingData(bookingId);
+        }
+    </script>
+</body>
+</html>

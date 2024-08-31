@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum Ticket Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .form-group:last-child {
+            border-bottom: none;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .form-group .checkbox-label {
+            display: inline-block;
+            font-size: 16px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .terms {
+            margin-top: 20px;
+        }
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        caption {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <caption>Museum Entry-Ticket Prices (Compulsory)</caption>
+        <tr>
+            <th>Category</th>
+            <th>Entry Ticket Price (Rs. per head)</th>
+        </tr>
+        <tr>
+            <td>General Entry</td>
+            <td>70</td>
+        </tr>
+        <tr>
+            <td>Group Booking (more than 25 people)</td>
+            <td>60</td>
+        </tr>
+        <tr>
+            <td>BPL Card Holder</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>Children in Organized School Group</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>Govt. or MCD School Group</td>
+            <td>10</td>
+        </tr>
+    </table>
+
+    <table>
+        <caption>Event Ticket Prices (Additional Charges)</caption>
+        <tr>
+            <th>Event</th>
+            <th>Category</th>
+            <th>Price (Rs. per head)</th>
+        </tr>
+        <tr>
+            <td rowspan="4">Cosmic Horizons: An Immersive Space Adventure<br>
+                Jurassic Legends: A Prehistoric Safari<br>A Beautiful Planet: An IMAX<sup>®</sup> 3D Experience<br>
+                Chemistry Magic: Live Reactions and Explosions<br>Quantum Quests: Hands-On Physics Adventures<br></td>
+            <td>Adult or Child</td>
+            <td>40</td>
+        </tr>
+        <tr>
+            <td>Group (more than 25 people)</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Organized Public School Group</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Govt. or MCD School Group</td>
+            <td>20</td>
+        </tr>
+    </table>
+    <h2>Museum Ticket Booking Form</h2>
+    <div class="container">
+    <form id="ticket-form" method="POST" action="/submit">
+    <!-- User Details -->
+    <div class="form-group">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="visit-date">Date of Visit:</label>
+        <input type="date" id="visit-date" name="visit-date" required>
+    </div>
+
+    <!-- Ticket Type Selection -->
+    <div class="form-group">
+        <label for="ticket-type">Ticket Type:</label>
+        <select id="ticket-type" name="ticket-type" required>
+            <option value="general">General Entry - Rs. 70 per head</option>
+            <option value="group">Group Booking (more than 25 people) - Rs. 60 per head</option>
+            <option value="bpl">BPL Card Holder - Rs. 20 per head</option>
+            <option value="school">Organized School Group - Rs. 25 per head</option>
+            <option value="govt-school">Govt./MCD School Group - Rs. 10 per head</option>
+        </select>
+    </div>
+
+    <!-- Number of Tickets -->
+    <div class="form-group">
+        <label for="num-tickets">Number of Tickets:</label>
+        <input type="number" id="num-tickets" name="num-tickets" min="1" required>
+    </div>
+
+    <!-- Event Selection -->
+    <div class="form-group">
+        <label>Events:</label>
+        <div class="form-group inline">
+            <input type="checkbox" id="planetarium" name="events" value="Planetarium Show" class="newCheckbox">
+            <label for="planetarium"><a href="event/spaceevent.html" target="_blank">Cosmic Horizons: An Immersive Space Adventure</a></label>
+        </div>
+        <div class="form-group inline">
+            <input type="checkbox" id="dinosaur" name="events" value="Dinosaur Exhibition" class="newCheckbox">
+            <label for="dinosaur"><a href="event/dinosaurevent.html" target="_blank">Jurassic Legends: A Prehistoric Safari</a></label>
+        </div>
+        <div class="form-group inline">
+            <input type="checkbox" id="imax" name="events" value="IMAX 3D Movie" class="newCheckbox">
+            <label for="imax"><a href="event/movieevent.html" target="_blank">A Beautiful Planet: An IMAX<sup>®</sup> 3D Experience</a></label>
+        </div>
+        <div class="form-group inline">
+            <input type="checkbox" id="chemistry" name="events" value="Chemistry Live-Experiment Demonstration" class="newCheckbox">
+            <label for="chemistry"><a href="event/chemistryevent.html" target="_blank">Chemistry Magic: Live Reactions and Explosions</a></label>
+        </div>
+        <div class="form-group inline">
+            <input type="checkbox" id="physics" name="events" value="Physics Workshop" class="newCheckbox">
+            <label for="physics"><a href="event/physicsevent.html" target="_blank">Quantum Quests: Hands-On Physics Adventures</a></label>
+        </div>
+    </div>
+    
+
+    
+    <!-- Calculate Grand Total Button -->
+    <div class="form-group">
+        <button type="button" class="calculate-btn" onclick="calculateTotal()">Calculate Grand Total</button>
+    </div>
+
+    <div class="form-group">
+        <p id="grand-total" name="grand-total">Grand Total: Rs. 0</p>
+        <!-- Hidden input to send the grand total to the next page -->
+        <input type="hidden" id="grand-total-input" name="grand-total" value="0">
+    </div>
+    <br>
+    <!-- QR Code Placeholder -->
+    <div class="qr-code"><center>
+        <p>Scan QR Code for Online Payment:</p>
+        <img src="qr.jpg" alt="QR Code" width="246" height="290.5"></center>
+    </div>
+    <div class="form-group">
+        <label for="userqr">Enter your UPI ID used for the payment (for payment verification):</label>
+        <input type="text" id="userqr" name="userqr" required>
+    </div>
+    <div class="terms">
+        <label><input type="checkbox" id="terms-conditions" name="terms-conditions" required> I agree to the <a href="#terms-and-conditions">Terms and Conditions</a></label>
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-group">
+        <button type="submit" class="submit-btn">Submit Booking</button>
+    </div>
+</form>
+</div>
+<br><br><br>
+    <a id="terms-and-conditions">
+    <h1>Terms and Conditions</h1>
+    <ol>
+        <li>
+    <h3>Acceptance of Terms</h3>
+    <p>By purchasing a ticket and entering the museum premises, you agree to comply with and be bound by these Terms and Conditions.</p>
+    </li>
+    <li>
+    <h3>Ticket Purchase and Validity</h3>
+    <ul>
+        <li>All tickets must be purchased either online through our official website or in person at the museum ticket counter.</li>
+        <li>Tickets are valid only for the date and time specified at the time of purchase. Entry will be denied to visitors presenting expired tickets.</li>
+        <li>Tickets are non-transferable and cannot be resold.</li>
+    </ul>
+    </li>
+    <li>
+    <h3>Payment</h3>
+    <ul>
+        <li>Payments can be made using cash, credit/debit cards, or via online payment options.</li>
+        <li>All payments are processed in Indian Rupees (INR).</li>
+    </ul>
+    </li>
+    <li>
+    <h3>Refunds and Cancellations</h3>
+    <ul>
+        <li>Tickets are non-refundable and non-exchangeable.</li>
+        <li>In case of event cancellation by the museum, ticket holders will be eligible for a refund or may choose to attend the rescheduled event.</li>
+    </ul>
+    </li><li>
+    <h3>Entry and Conduct</h3>
+    <ul>
+        <li>Visitors must carry valid identification and produce it upon request.</li>
+        <li>Children under 12 must be accompanied by an adult at all times.</li>
+        <li>Visitors are expected to maintain decorum within the museum premises. Any behavior deemed disruptive or unsafe by museum staff may result in removal from the premises without a refund.</li>
+    </ul>
+</li>
+    <li>
+    <h3>Safety and Security</h3>
+    <ul>
+        <li>For the safety of all visitors, security checks may be conducted at the entrance. Visitors must comply with all security procedures.</li>
+        <li>Prohibited items such as weapons, flammable substances, or any other items deemed dangerous are not allowed inside the museum.</li>
+    </ul>
+    </li>
+    <li>
+    <h3>Photography and Filming</h3>
+    <ul>
+        <li>Photography is allowed for personal use only. Flash photography, tripods, and other professional equipment are prohibited unless prior permission is granted.</li>
+        <li>Commercial use of photographs and videos taken at the museum is prohibited without written consent from the museum management.</li>
+    </ul>
+    </li>
+    <li>
+    <h3>Liability</h3>
+    <ul>
+        <li>The museum is not responsible for any loss, theft, or damage of personal belongings.</li>
+        <li>Visitors enter the museum and participate in activities at their own risk. The museum will not be liable for any personal injury, loss, or damage, except as required by law.</li>
+    </ul>
+    </li>
+    <li>
+    <h3>Privacy Policy</h3>
+    <p>Any personal information collected during the ticket booking process will be used solely for the purpose of providing museum services and will be handled in accordance with our privacy policy.</p>
+        </li>
+        <li>
+    <h3>Modifications to Terms</h3>
+    <p>The museum reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting on the museum's website.</p>
+        </li><li>
+    <h3>Governing Law</h3>
+    <p>These Terms and Conditions are governed by the laws of India. Any disputes arising from these terms will be subject to the jurisdiction of the courts in National Territory Region of India.</p>
+        </li>
+    </ol>
+</a>
+<script>
+    function calculateTotal() {
+        let ticketType = document.getElementById("ticket-type").value;
+        let numTickets = parseInt(document.getElementById("num-tickets").value);
+        let selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).length;
+        
+        let ticketPrice = 0;
+        switch (ticketType) {
+            case "general":
+                ticketPrice = 70;
+                break;
+            case "group":
+                ticketPrice = 60;
+                break;
+            case "bpl":
+                ticketPrice = 20;
+                break;
+            case "school":
+                ticketPrice = 25;
+                break;
+            case "govt-school":
+                ticketPrice = 10;
+                break;
+        }
+
+        let eventPrice = selectedEvents > 0 ? 40 : 0;
+        if (ticketType === "group" && numTickets > 25) {
+            eventPrice = 30;
+        } else if (ticketType === "govt-school") {
+            eventPrice = 20;
+        }
+
+
+        let total = (ticketPrice * numTickets) + (eventPrice * numTickets * selectedEvents);
+
+        document.getElementById("grand-total").textContent = `Grand Total: Rs. ${total}`;
+        document.getElementById("grand-total-input").value = total; // Update hidden input value
+    }
+    document.getElementById('booking-form').addEventListener('change', function() {
+            const termsChecked = document.getElementById('terms-conditions').checked;
+            document.getElementById('submit-btn').disabled = !termsChecked;
+        });
+</script>
+</body>
+</html>
